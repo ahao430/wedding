@@ -138,6 +138,7 @@ window.onload = function () {
     "https://map.qq.com/api/gljs?v=1.exp&key=SFTBZ-RPJK2-CY6UY-CNRGT-OORHZ-TOFTK" +
       "&callback=initTxMap"
   );
+
 };
 
 function loadScript(src) {
