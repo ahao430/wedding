@@ -11,19 +11,22 @@
 </head>
 <body>
   <div class="music-player">
-    <audio id="music" autoplay loop preload>
-      <source  src="./wedding-march.mp3"></source>
+    <audio id="music" loop>
+      <source  src="./bgm.mp3"></source>
     </audio>
-    <div class="icon-play" id="btn-play"></div>
+    <div class="icon-stop" id="btn-play"></div>
   </div>
   <div class="swiper-container">
     <div class="swiper-wrapper">
         <div class="swiper-slide slide-1">
-          <div class="title">叶维勤 & 刘梦琦</div>
+          <div class="title">叶惟勤 & 刘梦琦</div>
           <div class="sub-title">- 2011/11/20（星期六）-</div>
           <div class="sub-title">农历 十月十六日</div>
           <div class="icon-heart"></div>
           <div class="btn">我要来</div>
+          <div class="picture">
+            <img src="./img/1.png" loading="lazy" alt="">
+          </div>
         </div>
         <div class="swiper-slide slide-2">
           <div class="title">湖北省 · 孝感市</div>
@@ -37,8 +40,8 @@
           <div class="title">迷路怎么办？</div>
           <div class="sub-title">- 请 CALL -</div>
           <div class="tels">
-            <p>叶维勤：<a href="tel:13308647632"> 13308647632</a></p>
-            <p>刘梦琦：<a href="tel:19986287381"> 19986287381</a></p>
+            <p>叶惟勤：<a href="tel:13308647632">13308647632</a></p>
+            <p>刘梦琦：<a href="tel:19986287381">19986287381</a></p>
           </div>
           <div class="btn">好的呢</div>
         </div>
@@ -52,11 +55,11 @@
           </div>
           <div class="pictures">
             <div class="left">
-              <img class="img-1" loading="lazy" src="./img/4-1.png" alt="">
+              <img class="img-1 hidden" loading="lazy" src="./img/4-1.png" alt="">
             </div>
             <div class="right">
-              <img class="img-2" loading="lazy" src="./img/4-2.png" alt="">
-              <img class="img-3" loading="lazy" src="./img/4-3.png" alt="">
+              <img class="img-2 hidden" loading="lazy" src="./img/4-2.png" alt="">
+              <img class="img-3 hidden" loading="lazy" src="./img/4-3.png" alt="">
             </div>
           </div>
           <p class="desc">- 高清大图请找新郎/娘 -</p>
@@ -74,7 +77,7 @@
             <div class="icon-heart"></div>
           </div>
           <div class="picture">
-            <img src="./img/5.png" alt="">
+            <img src="./img/5.png" loading="lazy" alt="">
           </div>
         </div>
     </div>

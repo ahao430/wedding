@@ -1,3 +1,7 @@
+function $ (el) {
+  return document.querySelector(el)
+}
+
 window.onload = function () {
   // 初始化轮播
   var mySwiper = new Swiper(".swiper-container", {
@@ -19,31 +23,109 @@ window.onload = function () {
     scrollbar: {
       el: ".swiper-scrollbar",
     },
+
+    on: {
+      init: function () {
+        initAnimation(this.activeIndex)
+      },
+      slideChange: function () {
+        console.log(this)
+        removeAnimation(this.previousIndex)
+        initAnimation(this.activeIndex)
+      },
+    }
   });
+
+  // 动画
+  function removeAnimation (index) {
+    switch (index) {
+      case 0:
+        $('.slide-1 .picture').className = 'picture hidden'
+        break
+      case 1:
+        break
+      case 2:
+        break
+      case 3:
+        $('.slide-4 .img-1').className = 'img-1 hidden'
+        $('.slide-4 .img-2').className = 'img-2 hidden'
+        $('.slide-4 .img-3').className = 'img-3 hidden'
+        break
+      case 4:
+        $('.slide-5 .picture').className = 'picture hidden'
+        break
+    }
+  }
+  function initAnimation (index) {
+    switch (index) {
+      case 0:
+        $('.slide-1 .picture').className = 'picture flyin-left'
+        break
+      case 1:
+        break
+      case 2:
+        break
+      case 3:
+        $('.slide-4 .img-1').className = 'img-1 flyin-left'
+        setTimeout(function () {
+          $('.slide-4 .img-2').className = 'img-2 flyin-right'
+        }, 500)
+        setTimeout(function () {
+          $('.slide-4 .img-3').className = 'img-3 flyin-right'
+        }, 1000)
+        break
+      case 4:
+        $('.slide-5 .picture').className = 'picture flyin-left'
+        break
+    }
+  }
 
   // 播放器
   var playing = true;
   var music = document.getElementById("music");
   var btnPlay = document.getElementById("btn-play");
-  // 延迟监测自动播放
-  setTimeout(function () {
-    if (music.paused) {
-      playing = false;
-      btnPlay.className = "icon-stop";
-    }
-  }, 500);
+  initPlayer()
 
-  btnPlay.addEventListener("click", function () {
-    if (playing) {
-      music.pause();
-      playing = false;
-      btnPlay.className = "icon-stop";
-    } else {
-      music.play();
-      playing = true;
-      btnPlay.className = "icon-play";
+  function play () {
+    music.play();
+    playing = true;
+    btnPlay.className = "icon-play";
+  }
+  function stop () {
+    music.pause();
+    playing = false;
+    btnPlay.className = "icon-stop";
+  }
+
+  function onFirstTouch () {
+    if (music.paused) {
+      play();
+      document.body.removeEventListener('touchstart', onFirstTouch)
     }
-  });
+  }
+  function initPlayer () {
+    try {
+      play()
+    } catch (err) {
+      console.log(err)
+    }
+    setTimeout(function(){
+      if (music.paused){
+        playing = false;
+        btnPlay.className = "icon-stop";
+      }
+    }, 200)
+    btnPlay.addEventListener("click", function () {
+      if (music.paused) {
+        play()
+      } else {
+        stop()
+      }
+    });
+    document.body.addEventListener('touchstart', onFirstTouch)
+  }
+
+
 
   // 地图
   // 高德 
@@ -103,7 +185,7 @@ function initMap(type) {
         ],
       });
       markerLayer.on("click", function (e) {
-        location.href = 'http://apis.map.qq.com/uri/v1/marker?marker=coord:' + pos[1] + ',' + pos[0] + ';title:' + address
+        openMap(type)
       });
 
       break;
@@ -114,14 +196,7 @@ function initMap(type) {
       });
 
       var onMarkerClick = function (e) {
-        location.href =
-          "http://uri.amap.com/marker?position=" +
-          pos[0] +
-          "," +
-          pos[1] +
-          "&name=" +
-          address +
-          "&coordinate=gaode&callnative=1";
+        openMap(type)
       };
       var marker = new AMap.Marker({
         position: pos, //位置
@@ -132,5 +207,18 @@ function initMap(type) {
     case "bd":
       // http://api.map.baidu.com/marker?location=34.271454,108.958486&title=”+inform.orgName+"&content="+inform.orgAddress+"&output=html";
       break;
+  }
+  function openMap (type) {
+    switch (type) {
+      case 'tx':
+        location.href = 'http://apis.map.qq.com/uri/v1/marker?marker=coord:' + pos[1] + ',' + pos[0] + ';title:' + address
+        break
+      case 'gd':
+        location.href = "http://uri.amap.com/marker?position=" + pos[0] +
+        "," + pos[1] + "&name=" + address + "&coordinate=gaode&callnative=1";
+        break
+      case 'bd':
+        break
+    }
   }
 }
